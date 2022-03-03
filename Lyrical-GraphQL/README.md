@@ -1,1 +1,1 @@
-#lYrical
+# Lyrical-GraphQL
