@@ -12,12 +12,17 @@ class SongCreate extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-
-    this.props.mutate({
-      variables: {
-        title: this.state.title,
-      },
-    });
+    //if we want to redirect user after submit, then we need to first check that is the mutation done or not
+    // to check mutation done or not, we can chain a promise to props.mutate
+    this.props
+      .mutate({
+        variables: {
+          title: this.state.title,
+        },
+      })
+      .then(() => {
+        hashHistory.push("/");
+      });
   }
 
   render() {

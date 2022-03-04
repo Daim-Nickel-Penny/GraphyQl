@@ -1,22 +1,32 @@
-import React from "react";
+import React, { Component } from "react";
 import gql from "graphql-tag";
 import { graphql } from "react-apollo";
+import { Link } from "react-router";
 
-function SongList(props) {
-  function renderSongs() {
-    return props.data.songs.map((song, key) => {
+class SongList extends Component {
+  renderSongs() {
+    return this.props.data.songs.map(({ id, title }) => {
       return (
-        <li key={song.id} className="collection-item">
-          {song.title}
+        <li key={id} className="collection-item">
+          <Link to={`song/${id}`}>{title}</Link>
         </li>
       );
     });
   }
-  //if loading then display loading else call rendersongs
-  if (props.data.loading) {
-    return <div>Loading</div>;
-  } else {
-    return <ul className="collection">{renderSongs()}</ul>;
+
+  render() {
+    if (this.props.data.loading) {
+      return <div>Loading... </div>;
+    } else {
+      return (
+        <div>
+          <ul className="collection">{this.renderSongs()}</ul>
+          <Link to="/songs/new" className="btn-floating btn-large red right">
+            <i className="material-icons">add</i>
+          </Link>
+        </div>
+      );
+    }
   }
 }
 
